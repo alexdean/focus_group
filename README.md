@@ -1,24 +1,25 @@
-# README
+# FocusGroup
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+An experiment with ActionCable.
 
-Things you may want to cover:
+```
+$ redis-server
+$ bin/rails server
+```
 
-* Ruby version
+then open a few browsers and go to http://localhost:3000.
 
-* System dependencies
 
-* Configuration
+```ruby
+# to send a message from a rails console
+ActionCable.server.broadcast(IssueChannel::STREAM_NAME, 'hi from the console')
+ActionCable.server.broadcast(IssueChannel::STREAM_NAME, {message: 'hi from the console'})
+```
 
-* Database creation
+```javascript
+// send a message from a JS console
+App.issue.send({message: 'string message'})
+```
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+messages sent from JS must be objects. String messages are not delivered.
+`[NoMethodError - undefined method `except' for "string message":String]`
