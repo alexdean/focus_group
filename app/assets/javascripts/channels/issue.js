@@ -8,6 +8,15 @@ App.issue = App.cable.subscriptions.create({channel: "IssueChannel"}, {
   },
 
   received: function(data) {
-    console.log(data)
+    var sender = data['sentBy']
+    var barId = 'bar-' + sender;
+    var $bar = $('#' + barId);
+    if ($bar.length == 0) {
+      $bar = $('<div/>', {id: barId})
+      $bar.addClass('bar');
+      $bar.text(sender);
+      $('#graph').append($bar).append('<br/>');
+    }
+    $bar.width(data['width'])
   }
 });

@@ -1,11 +1,44 @@
-hello <%= @var %>
+<style>
+#graph {
+    width: 500px;
+    height: 200px;
+    border: 1px solid #aeaeae;
+    background-color: #eaeaea;
+}
+.bar {
+    width: 8px;
+    height: 25px;
+    margin: 1px;
+    display: inline-block;
+    position: absolute;
+    background-color: #aeaeae;
+}
+</style>
 
 <script>
-  // App.cable.subscriptions.create({
-  //   "channel": "IssueChannel",
-  //   "issue": 'Test',
-  //   "received": function(data) {
-  //     console.log(data)
-  //   }
-  // })
+$(function() {
+  var handle = null;
+  $handle = $('#handle')
+  $width = $('#width');
+  $handle.change(function() {
+    handle = $('#handle').val();
+  })
+  $width.change(function() {
+    App.issue.send({width: $width.val(), sentBy:$handle.val()})
+  })
+})
 </script>
+
+<p>
+  <label for='handle'>Handle</label>
+  <input type='text' id='handle' size='50'/>
+</p>
+
+<p>
+  <label for='width'>Width</label>
+  <input type='text' id='width' size='50'/>
+</p>
+
+<hr/>
+
+<div id='graph'></div>
