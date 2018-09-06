@@ -2,10 +2,11 @@
 // like app/views/layouts/application.html.erb. All it does is render <div>Hello React</div> at the bottom
 // of the page.
 
-import React from 'react'
+import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom'
 
 import { SocketProvider } from '../components/SocketProvider';
+import { UserForm } from '../components/UserForm';
 import { Graph } from '../components/graph.jsx'
 
 const Hello = () => (
@@ -13,7 +14,10 @@ const Hello = () => (
     <h2>React Version</h2>
     <SocketProvider>
       { ({ participants }) => (
-        <Graph data={ participants }/>
+        <Fragment>
+          <UserForm />
+          <Graph data={ participants }/>
+        </Fragment>
       )}
     </SocketProvider>
   </div>
