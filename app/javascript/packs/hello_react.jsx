@@ -6,26 +6,17 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 
-import "./application.js"
-import {Graph} from "../components/graph.jsx"
-
-var DATA = [
-  {name: 'Alex'}
-]
+import { Graph } from '../components/graph.jsx'
 
 const Hello = props => (
   <div>
-    <Graph data={DATA}/>
+    <SocketProvider>
+      { ({ participants }) => (
+        <Graph data={ participants }/>
+      )}
+    </SocketProvider>
   </div>
 )
-
-Hello.defaultProps = {
-  name: 'David'
-}
-
-Hello.propTypes = {
-  name: PropTypes.string
-}
 
 // quick & dirty: re-execute ReactDOM.render every time i receive new data.
 // move subscription into a react component.
