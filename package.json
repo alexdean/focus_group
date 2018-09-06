@@ -1,6 +1,10 @@
 {
   "name": "focus_group",
   "private": true,
+  "scripts": {
+    "generate": "plop --plopfile plopfile.js",
+    "g": "yarn generate"
+  },
   "dependencies": {
     "@rails/webpacker": "3.5",
     "babel-preset-react": "^6.24.1",
@@ -9,6 +13,7 @@
     "react-dom": "^16.4.2"
   },
   "devDependencies": {
+    "plop": "^2.1.0",
     "webpack-dev-server": "2.11.2"
   }
 }
