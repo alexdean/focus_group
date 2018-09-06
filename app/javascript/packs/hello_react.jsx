@@ -10,7 +10,8 @@ import "./application.js"
 import {Graph} from "../components/graph.jsx"
 
 var DATA = [
-  {name: 'Alex'}
+  {name: 'Alex', value: 100, uuid: 'abc'},
+  {name: 'Zeb', value: 150, uuid: 'def'}
 ]
 
 const Hello = props => (
@@ -26,12 +27,6 @@ Hello.defaultProps = {
 Hello.propTypes = {
   name: PropTypes.string
 }
-
-// quick & dirty: re-execute ReactDOM.render every time i receive new data.
-// move subscription into a react component.
-
-// each jsx should be 1 widget. (a text input, etc.)
-// each one is being pulled into the erb template.
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
