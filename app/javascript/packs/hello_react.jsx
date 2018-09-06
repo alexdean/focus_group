@@ -6,10 +6,12 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 
+import { SocketProvider } from '../components/SocketProvider';
 import { Graph } from '../components/graph.jsx'
 
 const Hello = props => (
   <div>
+    <h2>React Version</h2>
     <SocketProvider>
       { ({ participants }) => (
         <Graph data={ participants }/>
