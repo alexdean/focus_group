@@ -4,12 +4,11 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
 
 import { SocketProvider } from '../components/SocketProvider';
 import { Graph } from '../components/graph.jsx'
 
-const Hello = props => (
+const Hello = () => (
   <div>
     <h2>React Version</h2>
     <SocketProvider>
@@ -28,7 +27,7 @@ const Hello = props => (
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <Hello name="React" />,
+    <Hello />,
     document.body.appendChild(document.createElement('div')),
   )
 })

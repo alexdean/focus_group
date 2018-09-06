@@ -1,5 +1,5 @@
-// @flow
-import React, { Component } from 'react';
+/* global App:false */
+import { Component } from 'react';
 
 export class SocketProvider extends Component {
   constructor( props ) {
@@ -13,7 +13,7 @@ export class SocketProvider extends Component {
   }
 
   componentDidMount() {
-    const issue = App.cable.subscriptions.create({ channel: "IssueChannel" }, {
+    this.subscription = App.cable.subscriptions.create({ channel: "IssueChannel" }, {
       connected: function() {
         console.log('connected to IssueChannel')
       },
