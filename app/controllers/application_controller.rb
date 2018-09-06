@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
     if !cookies.signed[:uuid]
       cookies.signed[:uuid] = UUID.generate
     end
-    @current_user = User.new(cookies.signed[:uuid])
+
+    @current_user = User.from_uuid(cookies.signed[:uuid])
   end
 end

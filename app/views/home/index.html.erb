@@ -1,3 +1,4 @@
+<%= javascript_pack_tag 'hello_react' %>
 <style>
 #graph {
     width: 500px;
@@ -24,19 +25,19 @@ $(function() {
     handle = $('#handle').val();
   })
   $width.change(function() {
-    App.issue.send({width: $width.val(), sentBy:$handle.val()})
+    App.issue.send({uuid:'<%= @current_user.uuid %>', value: $width.val(), name:$handle.val()})
   })
 })
 </script>
 
 <p>
   <label for='handle'>Handle</label>
-  <input type='text' id='handle' size='50'/>
+  <input type='text' id='handle' size='50' value="<%= @current_user.name %>"/>
 </p>
 
 <p>
   <label for='width'>Width</label>
-  <input type='text' id='width' size='50'/>
+  <input type='text' id='width' size='50' value="<%= @current_user.value %>"/>
 </p>
 
 <hr/>
