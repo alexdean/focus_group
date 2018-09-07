@@ -1,3 +1,5 @@
+/* globals App:false */
+
 // Run this example by adding <%= javascript_pack_tag 'hello_react' %> to the head of your layout file,
 // like app/views/layouts/application.html.erb. All it does is render <div>Hello React</div> at the bottom
 // of the page.
@@ -6,16 +8,16 @@ import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom'
 
 import { SocketProvider } from '../components/SocketProvider';
-import { UserForm } from '../components/UserForm';
+import { Controls } from '../components/Controls';
 import { Graph } from '../components/graph.jsx'
 
 const Hello = () => (
   <div>
-    <h2>React Version</h2>
-    <SocketProvider>
-      { ({ participants }) => (
+    <h2>Focus Group</h2>
+    <SocketProvider uuid={ App.uuid }>
+      { ({ participants, publish }) => (
         <Fragment>
-          <UserForm />
+          <Controls publish={ publish } />
           <Graph data={ participants }/>
         </Fragment>
       )}

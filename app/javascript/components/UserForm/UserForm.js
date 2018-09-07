@@ -3,25 +3,23 @@ import React from 'react';
 
 import { Formik, Form, Field } from 'formik';
 
-export const UserForm = () => (
+export const UserForm = ({ onChange }) => (
   <Formik
     initialValues={{
-      handle: '',
-      width: ''
+      name: ''
     }}
     onSubmit={ values => {
-      console.log( 'Submitted:', values );
+      onChange( values.name );
     }}
     render={ () => (
       <Form>
-        <fieldset>
-          <label>Handle:</label>
-          <Field name="handle" />
+        <fieldset style={{ border: '0 none', padding: '10px 0' }}>
+          <label style={{ display: 'block', paddingBottom: '10px' }}>
+            Enter your name as you would like it to appear to others:
+          </label>
+          <Field name="name" style={{ width: '100%', border: '1px solid #222', borderRadius: '3px', lineHeight: '16px' }} />
         </fieldset>
-        <fieldset>
-          <label>Width:</label>
-          <Field name="width" />
-        </fieldset>
+        <button type="submit">Start Scoring</button>
       </Form>
     )}
     />

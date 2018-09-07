@@ -6,10 +6,12 @@ export class SocketProvider extends Component {
     super( props );
 
     this.state = {};
+
+    this.publish = this.publish.bind( this );
   }
 
   render() {
-    return this.props.children( this.state );
+    return this.props.children({ ...this.state, publish: this.publish });
   }
 
   componentDidMount() {
@@ -26,5 +28,12 @@ export class SocketProvider extends Component {
         this.setState({ participants });
       }
     });
+  }
+
+  publish( data ) {
+    const { uuid } = this.props;
+
+    console.log( 'Publish:', data );
+    this.subscription.send({ uuid, ...data });
   }
 }

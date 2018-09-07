@@ -18,6 +18,8 @@
 
 <script>
 $(function() {
+  App.uuid = '<%= @current_user.uuid %>';
+  
   var handle = null;
   $handle = $('#handle')
   $width = $('#width');
