@@ -9,16 +9,20 @@ import ReactDOM from 'react-dom'
 
 import { SocketProvider } from '../components/SocketProvider';
 import { Controls } from '../components/Controls';
-import { Graph } from '../components/Graph'
+import { Graph } from '../components/Graph';
+import { Bar } from '../components/Bar';
 
 const Hello = () => (
   <div>
     <h2>Focus Group</h2>
     <SocketProvider uuid={ App.uuid }>
-      { ({ participants, publish }) => (
+      { ({ participants = [], publish }) => (
         <Fragment>
           <Controls publish={ publish } />
           <Graph data={ participants }/>
+          { participants.length > 1 && (
+            <Bar name="[Average]" value={ participants.reduce( ( acc, { value }) => acc + value, 0 ) / participants.length } />
+          )}
         </Fragment>
       )}
     </SocketProvider>
