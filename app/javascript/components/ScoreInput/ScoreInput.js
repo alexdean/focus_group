@@ -14,16 +14,14 @@ export class ScoreInput extends Component {
   }
 
   render() {
+    const { labels: { min, max } = {} } = this.props;
+
     return (
-      <div
-        className={ styles.wrapper }
-        onClick={ this.onClick }
-        style={{
-          height: '20px',
-          border: '1px solid #222',
-          backgroundColor: '#EEE'
-        }}
-        >
+      <div className={ styles.wrapper } onClick={ this.onClick }>
+        <div className={ styles.min }>{ min }</div>
+        <div className={ styles.max }>{ max }</div>
+        <div className={ styles.track }></div>
+        <div className={ styles.knob } style={{ left: `${ this.state.score * 100 }%` }}></div>
       </div>
     );
   }

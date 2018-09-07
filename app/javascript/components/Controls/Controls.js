@@ -11,7 +11,7 @@ export class Controls extends Component {
   }
 
   render() {
-    const { prompt, publish } = this.props;
+    const { prompt, labels, publish } = this.props;
     const { name } = this.state;
 
     return (
@@ -19,9 +19,9 @@ export class Controls extends Component {
         { name
           ? (
             <div>
-              <div>Welcome, <strong>{ name }</strong>. { prompt }</div>
+              <div>Welcome, <strong>{ name }</strong>. { prompt || 'Your focus group is loading...' }</div>
               { prompt && (
-                <ScoreInput onChange={ score => publish({ name, value: score }) } />
+                <ScoreInput labels={ labels } onChange={ score => publish({ name, value: score }) } />
               )}
             </div>
           )
