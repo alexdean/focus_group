@@ -31,11 +31,9 @@ export class ScoreInput extends Component {
   }
 
   onClick( evt ) {
-    const { onChange } = this.props;
     const { left, width } = evt.target.getBoundingClientRect();
 
-    this.setState({ score: ( evt.clientX - left ) / width });
-    onChange( ( evt.clientX - left ) / width );
+    this.setState({ score: Math.min( 1, Math.max( 0, ( evt.clientX - left ) / width ) ) });
   }
 
   onMouseDown( evt ) {
