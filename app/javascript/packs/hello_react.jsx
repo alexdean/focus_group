@@ -16,9 +16,9 @@ const Hello = () => (
   <div>
     <h2>Focus Group</h2>
     <SocketProvider uuid={ App.uuid }>
-      { ({ responses = [], publish }) => (
+      { ({ responses = [], q, publish }) => (
         <Fragment>
-          <Controls publish={ publish } />
+          <Controls publish={ publish } prompt={ q } />
           <Graph data={ responses }/>
           { responses.length > 1 && (
             <Bar name="[Average]" value={ responses.reduce( ( acc, { value }) => acc + value, 0 ) / responses.length } />
