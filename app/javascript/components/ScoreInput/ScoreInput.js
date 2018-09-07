@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import styles from './ScoreInput.css';
+
 export class ScoreInput extends Component {
   constructor( props ) {
     super( props );
@@ -14,6 +16,7 @@ export class ScoreInput extends Component {
   render() {
     return (
       <div
+        className={ styles.wrapper }
         onClick={ this.onClick }
         style={{
           height: '20px',

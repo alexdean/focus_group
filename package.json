@@ -7,11 +7,15 @@
   },
   "dependencies": {
     "@rails/webpacker": "3.5",
+    "autoprefixer": "^9.1.5",
     "babel-preset-react": "^6.24.1",
+    "css-loader": "^1.0.0",
     "formik": "^1.2.0",
+    "postcss-loader": "^3.0.0",
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
-    "react-dom": "^16.4.2"
+    "react-dom": "^16.4.2",
+    "style-loader": "^0.23.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
