@@ -1,4 +1,6 @@
 class IssueChannel < ApplicationCable::Channel
+  include ActionView::Helpers::SanitizeHelper
+
   STREAM_NAME = 'issue'
   STATE_KEY = 'state'
   LAST_BROADCAST_KEY = 'last_broadcast'
@@ -34,7 +36,10 @@ class IssueChannel < ApplicationCable::Channel
   end
 
   def broadcast_current_state
-    message = Issue.fetch.as_json
+    message = Issue
+              .fetch
+              .as_json
+              .each_with_object({}) { |(k,v), acc| acc[k] = sanitize(v) }
     message['responses'] = pruned_clients
     ActionCable.server.broadcast(STREAM_NAME, message)
     RedisInstance.set(LAST_BROADCAST_KEY, Time.current.to_i)
@@ -48,7 +53,11 @@ class IssueChannel < ApplicationCable::Channel
     RedisInstance.hgetall(STATE_KEY).each do |uuid, raw|
       data = JSON.parse(raw)
       if TIMEOUT_THRESHOLD.ago.to_i <= data['last']
-        out << {uuid: uuid, name: data['name'], value: data['value']}
+        out << {
+          uuid: sanitize(uuid),
+          name: sanitize(data['name']),
+          value: data['value'].to_f
+        }
       else
         RedisInstance.hdel(STATE_KEY, uuid)
       end
