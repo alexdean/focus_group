@@ -9,7 +9,7 @@ import ReactDOM from 'react-dom'
 
 import { SocketProvider } from '../components/SocketProvider';
 import { Controls } from '../components/Controls';
-import { Graph } from '../components/graph.jsx'
+import { Graph } from '../components/Graph'
 
 const Hello = () => (
   <div>
