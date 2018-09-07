@@ -4,12 +4,11 @@ class IssueChannel < ApplicationCable::Channel
   STREAM_NAME = 'issue'
   STATE_KEY = 'state'
   LAST_BROADCAST_KEY = 'last_broadcast'
-  TIMEOUT_THRESHOLD = 15.seconds
+  TIMEOUT_THRESHOLD = 10.seconds
 
   # if there are periods of inactivity, trigger a broadcast to prune inactive clients.
-  periodically every: 10.seconds do
-    last_broadcast_at = RedisInstance.get(LAST_BROADCAST_KEY)
-    if last_broadcast_at.nil? || (Time.current.to_i - 10 <= last_broadcast_at.to_i)
+  periodically every: 1.second do
+    if broadcast_needed?
       broadcast_current_state
     end
   end
@@ -52,16 +51,25 @@ class IssueChannel < ApplicationCable::Channel
     out = []
     RedisInstance.hgetall(STATE_KEY).each do |uuid, raw|
       data = JSON.parse(raw)
-      if TIMEOUT_THRESHOLD.ago.to_i <= data['last']
+      if stale?(data['last'])
+        RedisInstance.hdel(STATE_KEY, uuid)
+      else
         out << {
           uuid: sanitize(uuid),
           name: sanitize(data['name']),
           value: data['value'].to_f
         }
-      else
-        RedisInstance.hdel(STATE_KEY, uuid)
       end
     end
     out
+  end
+
+  def stale?(timestamp)
+    timestamp.to_i < TIMEOUT_THRESHOLD.ago.to_i
+  end
+
+  def broadcast_needed?
+    last_broadcast_at = RedisInstance.get(LAST_BROADCAST_KEY)
+    last_broadcast_at.nil? || stale?(last_broadcast_at)
   end
 end
