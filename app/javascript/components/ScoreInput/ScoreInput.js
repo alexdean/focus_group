@@ -29,6 +29,20 @@ export class ScoreInput extends Component {
     const { onChange } = this.props;
     const { left, width } = evt.target.getBoundingClientRect();
 
+    this.setState({ score: ( evt.clientX - left ) / width });
     onChange( ( evt.clientX - left ) / width );
+  }
+
+  componentDidMount() {
+    const { onChange } = this.props;
+
+    this.tick = setInterval( () => {
+      onChange( this.state.score );
+    }, 1000 );
+  }
+
+  componentWillUnmount() {
+    this.tick.clear();
+    this.tick = null;
   }
 }
