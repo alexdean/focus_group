@@ -38,7 +38,7 @@ export class ScoreInput extends Component {
 
     this.tick = setInterval( () => {
       onChange( this.state.score );
-    }, 1000 );
+    }, 5 * 1000 );
   }
 
   componentWillUnmount() {
