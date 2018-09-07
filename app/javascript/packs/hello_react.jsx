@@ -19,10 +19,10 @@ const Hello = () => (
       { ({ responses = [], q, min, max, publish }) => (
         <Fragment>
           <Controls publish={ publish } prompt={ q } labels={{ min, max }} />
+            { responses.length > 0 && (
+              <Bar value={ responses.reduce( ( acc, { value }) => acc + value, 0 ) / responses.length } />
+            )}
           <Graph data={ responses }/>
-          { responses.length > 1 && (
-            <Bar name="[Average]" value={ responses.reduce( ( acc, { value }) => acc + value, 0 ) / responses.length } />
-          )}
         </Fragment>
       )}
     </SocketProvider>

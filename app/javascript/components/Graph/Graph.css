@@ -10,6 +10,7 @@
 .bar {
   height: 20px;
   background-color: #88D1F1;
+  border-left: 1px solid #88D1F1;
 }
 
 .label {

@@ -1,14 +1,10 @@
 // @flow
 import React from 'react';
 
-export const Bar = ({ name, value }) => (
-  <div style={{
-      height: '20px',
-      width: `${ Math.floor( value * 100 ) }%`,
-      border: '1px solid #828',
-      backgroundColor: '#E8E',
-      marginBottom: '5px'
-    }}>
-    { name }
+import styles from './Bar.css';
+
+export const Bar = ({ value = 0 }) => (
+  <div className={ styles.wrapper }>
+    <div className={ styles.bar } style={{ width: `${ 100 * value }%` }}></div>
   </div>
 );

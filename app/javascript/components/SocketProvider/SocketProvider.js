@@ -33,7 +33,7 @@ export class SocketProvider extends Component {
   publish( data ) {
     const { uuid } = this.props;
 
-    console.log( 'Publish:', data );
+    // TODO: Insert throttling.
     this.subscription.send({ uuid, ...data });
   }
 }
