@@ -16,12 +16,12 @@ const Hello = () => (
   <div>
     <h2>Focus Group</h2>
     <SocketProvider uuid={ App.uuid }>
-      { ({ participants = [], publish }) => (
+      { ({ responses = [], publish }) => (
         <Fragment>
           <Controls publish={ publish } />
-          <Graph data={ participants }/>
-          { participants.length > 1 && (
-            <Bar name="[Average]" value={ participants.reduce( ( acc, { value }) => acc + value, 0 ) / participants.length } />
+          <Graph data={ responses }/>
+          { responses.length > 1 && (
+            <Bar name="[Average]" value={ responses.reduce( ( acc, { value }) => acc + value, 0 ) / responses.length } />
           )}
         </Fragment>
       )}

@@ -24,8 +24,8 @@ export class SocketProvider extends Component {
         console.log('disconnected from IssueChannel')
       },
 
-      received: ( participants ) => {
-        this.setState({ participants });
+      received: ( data ) => {
+        this.setState( data );
       }
     });
   }
