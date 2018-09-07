@@ -56,7 +56,9 @@ export class ScoreInput extends Component {
     const score = ( evt.clientX - left ) / width;
 
     this.setState({ score });
-    onChange( score );
+    // sending on every movement creates huge message volumes.
+    // disabling until we can load test.
+    //  onChange( score );
   }
 
   componentDidMount() {

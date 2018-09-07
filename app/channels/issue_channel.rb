@@ -5,6 +5,7 @@ class IssueChannel < ApplicationCable::Channel
   STATE_KEY = 'state'
   LAST_BROADCAST_KEY = 'last_broadcast'
   STALE_CLIENT_THRESHOLD = 15.seconds
+  MAX_BROADCAST_INTERVAL = 5.seconds
 
   def initialize(*args)
     super
@@ -83,6 +84,6 @@ class IssueChannel < ApplicationCable::Channel
 
   def broadcast_needed?
     last_broadcast_at = RedisInstance.get(LAST_BROADCAST_KEY)
-    @data_received || last_broadcast_at.nil? || last_broadcast_at.to_f < (Time.current.to_i - STALE_CLIENT_THRESHOLD)
+    @data_received || last_broadcast_at.nil? || last_broadcast_at.to_f < (Time.current.to_i - MAX_BROADCAST_INTERVAL)
   end
 end
