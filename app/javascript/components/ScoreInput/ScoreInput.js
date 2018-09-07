@@ -31,9 +31,12 @@ export class ScoreInput extends Component {
   }
 
   onClick( evt ) {
+    const { onChange } = this.props;
     const { left, width } = evt.target.getBoundingClientRect();
+    const score = Math.min( 1, Math.max( 0, ( evt.clientX - left ) / width ) );
 
-    this.setState({ score: Math.min( 1, Math.max( 0, ( evt.clientX - left ) / width ) ) });
+    this.setState({ score });
+    onChange( score );
   }
 
   onMouseDown( evt ) {
@@ -42,7 +45,10 @@ export class ScoreInput extends Component {
   }
 
   onMouseUp() {
+    const { onChange } = this.props;
     this.setState({ engaged: false });
+
+    onChange( this.state.score );
   }
 
   onMouseMove( evt ) {
