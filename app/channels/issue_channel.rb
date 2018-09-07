@@ -4,10 +4,16 @@ class IssueChannel < ApplicationCable::Channel
   STREAM_NAME = 'issue'
   STATE_KEY = 'state'
   LAST_BROADCAST_KEY = 'last_broadcast'
-  TIMEOUT_THRESHOLD = 10.seconds
+  STALE_CLIENT_THRESHOLD = 15.seconds
+
+  def initialize(*args)
+    super
+    @mutex = Mutex.new
+    @data_received = false
+  end
 
   # if there are periods of inactivity, trigger a broadcast to prune inactive clients.
-  periodically every: 1.second do
+  periodically every: 0.5.seconds do
     if broadcast_needed?
       broadcast_current_state
     end
@@ -31,7 +37,10 @@ class IssueChannel < ApplicationCable::Channel
     current_state['last'] = now
 
     RedisInstance.hset(STATE_KEY, uuid, JSON.dump(current_state))
-    broadcast_current_state
+
+    @mutex.synchronize do
+      @data_received = true
+    end
   end
 
   def broadcast_current_state
@@ -40,8 +49,12 @@ class IssueChannel < ApplicationCable::Channel
               .as_json
               .each_with_object({}) { |(k,v), acc| acc[k] = sanitize(v) }
     message['responses'] = pruned_clients
-    ActionCable.server.broadcast(STREAM_NAME, message)
-    RedisInstance.set(LAST_BROADCAST_KEY, Time.current.to_i)
+
+    @mutex.synchronize do
+      ActionCable.server.broadcast(STREAM_NAME, message)
+      @data_received = false
+    end
+    RedisInstance.set(LAST_BROADCAST_KEY, Time.current.to_f)
   end
 
   # return current state of all clients, after removing stale reports
@@ -65,11 +78,11 @@ class IssueChannel < ApplicationCable::Channel
   end
 
   def stale?(timestamp)
-    timestamp.to_i < TIMEOUT_THRESHOLD.ago.to_i
+    timestamp.to_i < STALE_CLIENT_THRESHOLD.ago.to_i
   end
 
   def broadcast_needed?
     last_broadcast_at = RedisInstance.get(LAST_BROADCAST_KEY)
-    last_broadcast_at.nil? || stale?(last_broadcast_at)
+    @data_received || last_broadcast_at.nil? || last_broadcast_at.to_f < (Time.current.to_i - STALE_CLIENT_THRESHOLD)
   end
 end
