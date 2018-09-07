@@ -11,17 +11,19 @@ import { SocketProvider } from '../components/SocketProvider';
 import { Controls } from '../components/Controls';
 import { Graph } from '../components/Graph';
 import { Bar } from '../components/Bar';
+import { Spark } from '../components/Spark';
 
 const Hello = () => (
   <div>
     <h2>Focus Group</h2>
     <SocketProvider uuid={ App.uuid }>
-      { ({ responses = [], q, min, max, publish }) => (
+      { ({ responses = [], series = [], q, min, max, publish }) => (
         <Fragment>
           <Controls publish={ publish } prompt={ q } labels={{ min, max }} />
-            { responses.length > 0 && (
-              <Bar value={ responses.reduce( ( acc, { value }) => acc + value, 0 ) / responses.length } />
-            )}
+          { responses.length > 0 && (
+            <Bar value={ responses.reduce( ( acc, { value }) => acc + value, 0 ) / responses.length } />
+          )}
+          <Spark series={ series } />
           <Graph data={ responses }/>
         </Fragment>
       )}
