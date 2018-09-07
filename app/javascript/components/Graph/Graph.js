@@ -1,13 +1,16 @@
 import React from 'react';
 
-import { Bar } from '../Bar';
+import styles from './Graph.css';
 
 export const Graph = ({ data = [] }) => (
-  <div style={{ padding: '10px 0' }}>
+  <div className={ styles.wrapper }>
     {
       data.map( function( item, idx ) {
         return (
-          <Bar key={ item.uuid || idx } { ...item } />
+          <div key={ item.uuid || idx } className={ styles.row }>
+            <div className={ styles.bar } style={{ width: `${ item.value * 100 }%` }}></div>
+            <div className={ styles.label }>{ item.name }</div>
+          </div>
         );
       })
     }

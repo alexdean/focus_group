@@ -1,0 +1,22 @@
+.wrapper {
+  margin: 10px;
+}
+
+.row {
+  position: relative;
+  padding: 2px 0 2px 100px;
+}
+
+.bar {
+  height: 20px;
+  background-color: #88D1F1;
+}
+
+.label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 2px 0;
+  line-height: 20px;
+  white-space: nowrap;
+}
