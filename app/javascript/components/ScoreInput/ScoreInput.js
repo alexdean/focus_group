@@ -48,10 +48,8 @@ export class ScoreInput extends Component {
   onMouseMove( evt ) {
     if ( !this.state.engaged ) return;
 
-    const { onChange } = this.props;
-
     const { left, width } = this.el.getBoundingClientRect();
-    const score = ( evt.clientX - left ) / width;
+    const score = Math.min( 1, Math.max( 0, ( evt.clientX - left ) / width ) );
 
     this.setState({ score });
     // sending on every movement creates huge message volumes.
