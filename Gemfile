@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.5.0'
+ruby '2.5.5'
 
 gem 'jquery-rails'
 gem 'puma', '~> 3.11'
-gem 'rails', '~> 5.2.1'
+gem 'rails', '~> 5.2.0'
 gem 'redis'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
@@ -14,6 +14,7 @@ gem 'webpacker'
 
 group :development, :test do
   gem 'byebug'
+  gem 'bundler-audit'
 end
 
 group :development do
